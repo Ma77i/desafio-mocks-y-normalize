@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("/static/img/logo.png");
+}
+
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+}
+
+nav {
+    background-color: aquamarine;
+}
+
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+li {
+    list-style: none;
+    padding: 2px 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+}
+
+.tceldas {
+    display: flex;
+    flex-direction: column;
+}
+
+#room {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px 15px;
+}
+
+p {
+    background-color: azure;
+    border-radius: 5px;
+    padding: 2px 15px;
+}
+
+p strong {
+    color: blue;
+}
+
+.bubble {
+    background-color: rgb(96, 201, 139);
+    font-style: italic;
+    border-radius: 5px;
+    padding: 2px 15px;
+}

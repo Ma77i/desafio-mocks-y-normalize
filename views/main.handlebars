@@ -1,0 +1,77 @@
+<div class="container mx">
+
+    <h2>AGREGAR PRODUCTO</h2>
+    <form method="post" class="m-4">
+
+        <div class="input-group">
+            <label for="title" class="input-group-text">Nombre </label>
+            <input name="title" placeholder="Title" class="form-control" required>
+        </div>
+        <div class="input-group">
+            <label for="price" class="input-group-text">Precio </label>
+            <input name="price" type="number" placeholder="Price" class="form-control" required>
+        </div>
+        <div class="input-group">
+            <label for="thumbnail" class="input-group-text">Imagen </label>
+            <input name="thumbnail" type="url" placeholder="Imagen" class="form-control" required>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+
+
+
+    <h2>PRODUCTOS
+
+    </h2>
+    <table class="table table-sm table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+            </tr>
+        </thead>
+        <tbody id="body-table" class=""></tbody>
+    </table>
+
+
+    <h2>Chat</h2>
+
+    <div id="room"></div>
+    
+    <form id="formulario" class="m-4">
+        <div class="input-group">
+            <label for="mail" class="input-group-text">Mail </label>
+            <input id="mail" name="mail" type="email" placeholder="Mail" class="form-control" required>
+        </div>
+        <div class="input-group">
+            <label for="nombre" class="input-group-text">Nombre </label>
+            <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control" required>
+        </div>
+        <div class="input-group">
+            <label for="apellido" class="input-group-text">Apellido </label>
+            <input id="apellido" name="apellido" type="text" placeholder="Apellido" class="form-control" required>
+        </div>
+        <div class="input-group">
+            <label for="alias" class="input-group-text">Alias </label>
+            <input id="alias" name="alias" type="text" placeholder="Alias" class="form-control" required>
+        </div>
+        <div class="input-group">
+            <label for="edad" class="input-group-text">Edad </label>
+            <input id="edad" name="edad" type="text" placeholder="Edad" class="form-control" required>
+        </div>
+        <div class="input-group">
+            <label for="avatar" class="input-group-text">Avatar </label>
+            <input id="avatar" name="avatar" type="text" placeholder="Avatar" class="form-control" required>
+        </div>
+        <div class="input-group">
+            <label for="mensaje" class="input-group-text">Mensaje </label>
+            <input id="mensaje" name="mensaje" type="text" placeholder="Mensaje" class="form-control" required>
+        </div>
+        <div class="col-12">
+            <button id="btn" class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>

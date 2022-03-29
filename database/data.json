@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Hardrock A1",
+    "price": 765,
+    "thumbnail": "https://assets.specialized.com/i/specialized/121879?bg=rgb(241,241,241)&w=2500&h=1406&fmt=auto"
+  },
+  {
+    "id": 2,
+    "title": "Rockhopper",
+    "price": 965,
+    "thumbnail": "https://assets.specialized.com/i/specialized/91520-45_ROCKHOPPER-ELITE-29-CSTBLK-BLK_HERO"
+  },
+  {
+    "id": 3,
+    "title": "Chisel",
+    "price": 1265,
+    "thumbnail": "https://assets.specialized.com/i/specialized/91718-37_CHISEL-WMN_DSW-EXPERT-29_CSTBLU-ACDLAVA_HERO"
+  },
+  {
+    "id": 4,
+    "title": "Hardtail",
+    "price": "1231",
+    "thumbnail": "https://assets.specialized.com/i/specialized/91318-50_EPIC-HT-MEN_COMP-CARBON-29_ACDPNK-BLK_HERO?bg=rgb(241,241,241)&w=2500&h=1406&fmt=auto"
+  },
+  {
+    "id": 5,
+    "title": "Swork Turbo Levo",
+    "price": "2343",
+    "thumbnail": "https://assets.specialized.com/i/specialized/95221-06_LEVO-SW-CARBON-METWHTSIL-CHRM-DRMSIL_HERO"
+  },
+  {
+    "id": 6,
+    "title": "Epic Pro",
+    "price": "2454",
+    "thumbnail": "https://assets.specialized.com/i/specialized/97620-10_EPIC-PRO-ABLN-BLK_HERO?bg=rgb(241,241,241)&w=2500&h=1406&fmt=auto"
+  },
+  {
+    "id": 7,
+    "title": "Epic expert",
+    "price": "323",
+    "thumbnail": "https://assets.specialized.com/i/specialized/90318-30_EPIC-MEN_EXPERT-CARBON-29_CHAR-BLK-RKTRED_HERO"
+  },
+  {
+    "id": 8,
+    "title": "Logo",
+    "price": "4",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/2/24/Specialized_red_S_black_logotype.jpg"
+  },
+  {
+    "id": 9,
+    "title": "Demo Race",
+    "price": "4324",
+    "thumbnail": "https://images.bike24.net/i/mb/fc/c4/f9/demo-race-02-858542.jpg"
+  }
+]
