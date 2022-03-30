@@ -42,36 +42,53 @@ mongoose.connect(`${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTI
     const bikeRouter = require("./routes/bikes")
     const chatRouter = require("./routes/chat")
     const homeRouter = require('./routes/home')
-    
+    const prodTestRouter = require("./routes/product-test")
     
     app.use("/api/bikes", bikeRouter)
     app.use("/api/chat", chatRouter)
     app.use("/", homeRouter)
-
-
-//---------SOCKET
+    app.use("/api/product-test", prodTestRouter)
+    
+    
+    //---------SOCKET
     io.on('connection', async (socket) => {
         console.log((`an user connected ${socket.id}`))
-    
+
+        //obtengo los productos y los envio por socket emit
         const list = await products.getAll()
         socket.emit("prods", list)
-    
-    /*  socket.on("newMsj", async data => {
-            const msj = await chats.save(data)
-            console.log(msj)
-        }) */
+        
+        //leo el mensaje nuevo y lo guardo en la base de datos
         socket.on("newMsj", async data => {
             const msj = await chatModel.create(data)
-            console.log("Guardados desde el navegador: B: ", msj)
+            return msj
         })
-    
-        //const msjs = await chats.getAll()
+        
+        //obtengo los mensajes y los envio por socket emit
         const msjs = await chatModel.getAll()
         io.sockets.emit("msjs", msjs)
-    })
 
+        //obtengo los mensajes normalizados 
+        const norm = await chatModel.getNorm()
+        socket.emit("msNorm", norm)
+        
+
+
+
+        // socket.on("newMsj", async data => {
+        //     const msj = await chats.save(data)
+        //     console.log(msj)
+        // })
+
+        //const msjs = await chats.getAll()
+        //io.sockets.emit("msjs", msjs)
+    })
     
-//-------- HANDLEBARS
+    
+    
+    
+    
+    //-------- HANDLEBARS
     
     //engine
     const { engine } = require('express-handlebars')
@@ -87,5 +104,3 @@ mongoose.connect(`${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTI
     server.on('err', (err) => console.log(`Error: ${err}`))
 })
 .catch((err)=>console.log("Error on mongo: ", err))
-
-
