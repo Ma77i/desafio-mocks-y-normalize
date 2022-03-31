@@ -14,6 +14,7 @@ const io = new Server(server)
 
 const { HOSTNAME, SCHEMA, OPTIONS, DATABASE, USER, PASSWORD} = require('./config')
 const chatModel = require("./models/mongoChat")
+const prodModel = require("./models/mongoProd")
 
 const Contenedor = require(path.join(__dirname, "/models/contenedor.js"));
 const products = new Contenedor(path.join(__dirname, "/database/data.json"))
@@ -39,24 +40,17 @@ mongoose.connect(`${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTI
     app.use("/static", express.static(path.join(__dirname, "public")))
     
     
-    const bikeRouter = require("./routes/bikes")
-    const chatRouter = require("./routes/chat")
-    const homeRouter = require('./routes/home')
-    const prodTestRouter = require("./routes/product-test")
-    
-    app.use("/api/bikes", bikeRouter)
-    app.use("/api/chat", chatRouter)
-    app.use("/", homeRouter)
-    app.use("/api/product-test", prodTestRouter)
     
     
     //---------SOCKET
     io.on('connection', async (socket) => {
         console.log((`an user connected ${socket.id}`))
-
+        
         //obtengo los productos y los envio por socket emit
-        const list = await products.getAll()
+        const list = await prodModel.getAll()
         socket.emit("prods", list)
+        // const list = await products.getAll()
+        // socket.emit("prods", list)
         
         //leo el mensaje nuevo y lo guardo en la base de datos
         socket.on("newMsj", async data => {
@@ -67,25 +61,34 @@ mongoose.connect(`${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTI
         //obtengo los mensajes y los envio por socket emit
         const msjs = await chatModel.getAll()
         io.sockets.emit("msjs", msjs)
-
+        
         //obtengo los mensajes normalizados 
         const norm = await chatModel.getNorm()
         socket.emit("msNorm", norm)
         
-
-
-
+        
+        
+        
         // socket.on("newMsj", async data => {
-        //     const msj = await chats.save(data)
-        //     console.log(msj)
-        // })
-
-        //const msjs = await chats.getAll()
-        //io.sockets.emit("msjs", msjs)
-    })
-    
-    
-    
+            //     const msj = await chats.save(data)
+            //     console.log(msj)
+            // })
+            
+            //const msjs = await chats.getAll()
+            //io.sockets.emit("msjs", msjs)
+        })
+        
+        const bikeRouter = require("./routes/bikes")
+        const chatRouter = require("./routes/chat")
+        const homeRouter = require('./routes/home')
+        const prodTestRouter = require("./routes/product-test")
+        
+        app.use("/api/bikes", bikeRouter)
+        app.use("/api/chat", chatRouter)
+        app.use("/", homeRouter)
+        app.use("/api/product-test", prodTestRouter)
+        
+        
     
     
     //-------- HANDLEBARS

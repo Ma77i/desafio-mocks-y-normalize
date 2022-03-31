@@ -36,14 +36,10 @@ router.put("/:id", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-    const {
-        body
-    } = req
+    const { body } = req
 
     const id = await Bikes.create(body)
-    res.status(201).send({
-        id
-    })
+    res.status(201).send({ id })
 
 })
 router.delete("/:id", async (req, res) => {

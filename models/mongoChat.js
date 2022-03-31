@@ -56,7 +56,7 @@ class Chatmg {
       },
       data
     );
-    print(normalizedData);
+    //print(normalizedData);
     return normalizedData;
   }
 

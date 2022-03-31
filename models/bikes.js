@@ -38,7 +38,6 @@ class Bikes {
             const bikes = JSON.parse(raw)
 
             for (const bike of bikes) {
-                //console.log(movie);
                 await this.db("bikes").insert(bike)
             }
         } catch (e) {

@@ -45,6 +45,7 @@ module.exports = {
     try {
       const product = await productModel.create(body)
       res.status(201).send(product)
+      res.redirect('/')
     } catch (error) {
       console.log(error)
     }
