@@ -4,53 +4,64 @@ const mongoose = require('mongoose');
 const path = require('path')
 const { Server } = require('socket.io')
 
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+
+
+// session store
+const MongoStore = require("connect-mongo")
+const { mongoConfig } = require("./config")
+//const FileStore = require('session-file-store')
+
+
+// websocket
 const app = express();
 const server = http.createServer(app)
 const io = new Server(server)
 
+const { HOSTNAME, SCHEMA, OPTIONS, DATABASE, USER, PASSWORD} = mongoConfig
 
-// const Bikes = require("./model/bikes")
-// const ChatDB = require("./model/chatSQLite")
-
-const { HOSTNAME, SCHEMA, OPTIONS, DATABASE, USER, PASSWORD} = require('./config')
+// Models
 const chatModel = require("./models/mongoChat")
 const prodModel = require("./models/mongoProd")
 
-const Contenedor = require(path.join(__dirname, "/models/contenedor.js"));
-const products = new Contenedor(path.join(__dirname, "/database/data.json"))
 
-const Chat = require(path.join(__dirname, "/models/chat.js"));
-const chats = new Chat(path.join(__dirname, "/database/chat.json"))
-
-/* 
-try {
-    Bikes.loadData()
-    ChatDB.loadData()
-    console.log("se creo la tabla");
-} catch (e) {
-    console.log(e)
-    console.log("could not start servers")
-}
- */
+// Mongoose connection
 mongoose.connect(`${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTIONS}`).then(()=>{
     console.log("Connected to mongoose");
 
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
     app.use("/static", express.static(path.join(__dirname, "public")))
+    app.use(cookieParser("This is a secret"))
+    app.use(session({
+        secret: "secret",
+        resave: true,
+        saveUninitialized: true,
+        
+        store: new MongoStore({
+            mongoUrl: `${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTIONS}`,
+            ttl: 1 * 60,
+            expire: 1000 * 1 * 60,
+            autoRemove: "native"
+        })
+        //     store: new FileStore({
+        //     path: path.join(__dirname, "./session"),
+        //     ttl: 60,
+        //     reapInterval: 60,
+        //     retires: 0
+        // })
+    }))
     
     
     
-    
-    //---------SOCKET
+    // Socket connection
     io.on('connection', async (socket) => {
         console.log((`an user connected ${socket.id}`))
         
         //obtengo los productos y los envio por socket emit
         const list = await prodModel.getAll()
         socket.emit("prods", list)
-        // const list = await products.getAll()
-        // socket.emit("prods", list)
         
         //leo el mensaje nuevo y lo guardo en la base de datos
         socket.on("newMsj", async data => {
@@ -66,18 +77,10 @@ mongoose.connect(`${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTI
         const norm = await chatModel.getNorm()
         socket.emit("msNorm", norm)
         
-        
-        
-        
-        // socket.on("newMsj", async data => {
-            //     const msj = await chats.save(data)
-            //     console.log(msj)
-            // })
-            
-            //const msjs = await chats.getAll()
-            //io.sockets.emit("msjs", msjs)
         })
         
+        
+        // routers
         const bikeRouter = require("./routes/bikes")
         const chatRouter = require("./routes/chat")
         const homeRouter = require('./routes/home')
